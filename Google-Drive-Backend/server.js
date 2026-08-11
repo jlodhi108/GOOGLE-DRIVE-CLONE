@@ -60,9 +60,16 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });
 
-// 404 handler
-app.use((req, res, next) => {
-  res.status(404).json({ message: 'Not Found' });
+// API 404 handler
+app.use('/api', (req, res, next) => {
+  res.status(404).json({ message: 'API Route Not Found' });
+});
+
+// Serve React/Vite Frontend
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
 });
 
 // Global error handler
