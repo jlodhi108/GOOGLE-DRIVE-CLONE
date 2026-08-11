@@ -54,8 +54,8 @@ export function ItemExplorer({
     function onDocClick(e) {
       if (!e.target.closest('.item-menu') && !e.target.closest('.more-btn')) setOpenMenuId(null);
     }
-    document.addEventListener('click', onDocClick);
-    return () => document.removeEventListener('click', onDocClick);
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
   }, []);
 
   // Reset transient UI state (selection, open panel/menu) whenever the
@@ -203,7 +203,7 @@ export function ItemExplorer({
         <span className="file-row__actions" onClick={e => e.stopPropagation()}>
           {menu && (
             <>
-              <button className="icon-btn small more-btn" aria-label={`More actions for ${item.name}`} aria-haspopup="true" aria-expanded={openMenuId === item.id} onClick={() => toggleMenu(item.id)}>⋮</button>
+              <button className="icon-btn small more-btn" aria-label={`More actions for ${item.name}`} aria-haspopup="true" aria-expanded={openMenuId === item.id} onClick={(e) => { e.preventDefault(); e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); toggleMenu(item.id); }}>⋮</button>
               {openMenuId === item.id && menu}
             </>
           )}
@@ -234,7 +234,7 @@ export function ItemExplorer({
           ) : <span />}
           {menu && (
             <span style={{ position: 'relative' }} onClick={e => e.stopPropagation()}>
-              <button className="icon-btn small more-btn" aria-label={`More actions for ${item.name}`} aria-haspopup="true" aria-expanded={openMenuId === item.id} onClick={() => toggleMenu(item.id)}>⋮</button>
+              <button className="icon-btn small more-btn" aria-label={`More actions for ${item.name}`} aria-haspopup="true" aria-expanded={openMenuId === item.id} onClick={(e) => { e.preventDefault(); e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); toggleMenu(item.id); }}>⋮</button>
               {openMenuId === item.id && menu}
             </span>
           )}
