@@ -122,3 +122,4 @@ dist
 .claude/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node .claude/
+database.sqlite
