@@ -7,7 +7,7 @@ COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Setup the backend
-FROM node:20-alpine
+FROM node:20
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
