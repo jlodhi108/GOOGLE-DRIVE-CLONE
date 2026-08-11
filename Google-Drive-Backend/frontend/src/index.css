@@ -263,7 +263,7 @@ button, input, select { font-size: 0.9rem; }
 .selection-bar__actions .icon-btn { color: var(--accent-text); }
 
 .content-split { display: flex; gap: 16px; align-items: flex-start; }
-.file-area { flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; }
+.file-area { flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
 
 .table-head {
   display: none; align-items: center; gap: 10px; padding: 10px 14px;

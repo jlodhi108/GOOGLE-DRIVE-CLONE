@@ -185,6 +185,7 @@ export function ItemExplorer({
         aria-selected={isSelected}
         onClick={() => handleRowClick(item)}
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleRowClick(item); } }}
+        style={{ position: 'relative', zIndex: openMenuId === item.id ? 10 : 1 }}
       >
         {mode !== 'shared' && (
           <span className="file-row__check" onClick={e => e.stopPropagation()}>
@@ -223,6 +224,7 @@ export function ItemExplorer({
         aria-selected={isSelected}
         onClick={() => handleRowClick(item)}
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleRowClick(item); } }}
+        style={{ position: 'relative', zIndex: openMenuId === item.id ? 10 : 1 }}
       >
         <div className="file-card__top">
           {mode !== 'shared' ? (
