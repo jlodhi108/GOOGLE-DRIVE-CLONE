@@ -1,37 +1,42 @@
+const nodemailer = require('nodemailer');
 const config = require('../config/config');
 
+// Create transporter using SMTP credentials from .env
+function createTransporter() {
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    return null;
+  }
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    }
+  });
+}
+
 async function sendEmail({ to, subject, text, html }) {
-  // If SendGrid is not configured, log to console and skip sending
-  if (!config.sendgridApiKey || !config.fromEmail) {
-    console.log(`[EMAIL - NO SENDGRID] To: ${to} | Subject: ${subject}`);
+  const transporter = createTransporter();
+
+  // If SMTP not configured, log OTP to console as fallback
+  if (!transporter) {
+    console.log(`[EMAIL - NO SMTP] To: ${to} | Subject: ${subject}`);
     console.log(`[EMAIL BODY] ${text}`);
     return;
   }
 
   try {
-    const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${config.sendgridApiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        personalizations: [{ to: [{ email: to }] }],
-        from: { email: config.fromEmail },
-        subject,
-        content: [
-          { type: 'text/plain', value: text },
-          { type: 'text/html', value: html }
-        ]
-      })
+    await transporter.sendMail({
+      from: `"Drive Clone" <${process.env.SMTP_USER}>`,
+      to,
+      subject,
+      text,
+      html
     });
-
-    if (!res.ok) {
-      const body = await res.text();
-      console.error(`Failed to send email: ${res.status} ${body}`);
-    }
+    console.log(`[EMAIL SENT] To: ${to} | Subject: ${subject}`);
   } catch (err) {
     console.error('Email sending error (non-fatal):', err.message);
+    console.log(`[EMAIL FALLBACK] To: ${to} | ${text}`);
   }
 }
 
