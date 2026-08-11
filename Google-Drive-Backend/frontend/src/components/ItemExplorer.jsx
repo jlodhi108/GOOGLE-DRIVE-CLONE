@@ -153,7 +153,7 @@ export function ItemExplorer({
   }
 
   function renderSelectionActions() {
-    const items = visibleItems.filter(i => selected.has(i._id));
+    const items = visibleItems.filter(i => selected.has(i.id));
     if (mode === 'trash') {
       return (
         <>
@@ -174,11 +174,11 @@ export function ItemExplorer({
   }
 
   function renderRow(item) {
-    const isSelected = selected.has(item._id);
+    const isSelected = selected.has(item.id);
     const menu = renderItemMenu(item);
     return (
       <div
-        key={item._id}
+        key={item.id}
         className={`file-row${isSelected ? ' is-selected' : ''}`}
         tabIndex={0}
         role="row"
@@ -202,8 +202,8 @@ export function ItemExplorer({
         <span className="file-row__actions" onClick={e => e.stopPropagation()}>
           {menu && (
             <>
-              <button className="icon-btn small more-btn" aria-label={`More actions for ${item.name}`} aria-haspopup="true" aria-expanded={openMenuId === item._id} onClick={() => toggleMenu(item._id)}>⋮</button>
-              {openMenuId === item._id && menu}
+              <button className="icon-btn small more-btn" aria-label={`More actions for ${item.name}`} aria-haspopup="true" aria-expanded={openMenuId === item.id} onClick={() => toggleMenu(item.id)}>⋮</button>
+              {openMenuId === item.id && menu}
             </>
           )}
         </span>
@@ -212,11 +212,11 @@ export function ItemExplorer({
   }
 
   function renderCard(item) {
-    const isSelected = selected.has(item._id);
+    const isSelected = selected.has(item.id);
     const menu = renderItemMenu(item);
     return (
       <div
-        key={item._id}
+        key={item.id}
         className={`file-card${isSelected ? ' is-selected' : ''}`}
         tabIndex={0}
         role="row"
@@ -227,13 +227,13 @@ export function ItemExplorer({
         <div className="file-card__top">
           {mode !== 'shared' ? (
             <span className="file-row__check" onClick={e => e.stopPropagation()}>
-              <input type="checkbox" aria-label={`Select ${item.name}`} checked={isSelected} onChange={() => toggleSelected(item._id)} />
+              <input type="checkbox" aria-label={`Select ${item.name}`} checked={isSelected} onChange={() => toggleSelected(item.id)} />
             </span>
           ) : <span />}
           {menu && (
             <span style={{ position: 'relative' }} onClick={e => e.stopPropagation()}>
-              <button className="icon-btn small more-btn" aria-label={`More actions for ${item.name}`} aria-haspopup="true" aria-expanded={openMenuId === item._id} onClick={() => toggleMenu(item._id)}>⋮</button>
-              {openMenuId === item._id && menu}
+              <button className="icon-btn small more-btn" aria-label={`More actions for ${item.name}`} aria-haspopup="true" aria-expanded={openMenuId === item.id} onClick={() => toggleMenu(item.id)}>⋮</button>
+              {openMenuId === item.id && menu}
             </span>
           )}
         </div>
