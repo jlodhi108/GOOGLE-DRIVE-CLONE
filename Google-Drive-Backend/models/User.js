@@ -42,8 +42,28 @@ User.init({
   lastLogin: { type: DataTypes.DATE },
   resetPasswordToken: { type: DataTypes.STRING },
   resetPasswordExpire: { type: DataTypes.DATE },
-  tokens: { type: DataTypes.JSON, defaultValue: [] },
-  refreshTokens: { type: DataTypes.JSON, defaultValue: [] }
+  tokens: {
+    type: DataTypes.JSON,
+    defaultValue: [],
+    get() {
+      const val = this.getDataValue('tokens');
+      if (typeof val === 'string') {
+        try { return JSON.parse(val); } catch (e) { return []; }
+      }
+      return val || [];
+    }
+  },
+  refreshTokens: {
+    type: DataTypes.JSON,
+    defaultValue: [],
+    get() {
+      const val = this.getDataValue('refreshTokens');
+      if (typeof val === 'string') {
+        try { return JSON.parse(val); } catch (e) { return []; }
+      }
+      return val || [];
+    }
+  }
 }, {
   sequelize,
   modelName: 'User',
