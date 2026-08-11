@@ -156,7 +156,7 @@ exports.getAdminActivityStatistics = async (req, res) => {
     const stats = await Activity.findAll({
       where: match,
       attributes: [
-        ['action', '_id'],
+        ['action', 'id'],
         [fn('COUNT', col('action')), 'count']
       ],
       group: ['action'],
@@ -337,7 +337,7 @@ exports.getActivityStatistics = async (req, res) => {
         createdAt: { [Op.between]: [startDate, endDate] }
       },
       attributes: [
-        ['action', '_id'],
+        ['action', 'id'],
         [fn('COUNT', col('action')), 'count']
       ],
       group: ['action'],

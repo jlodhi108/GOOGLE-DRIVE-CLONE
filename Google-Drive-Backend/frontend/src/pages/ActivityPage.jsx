@@ -23,8 +23,8 @@ export function ActivityPage() {
 
   const handleMarkRead = async (activity) => {
     try {
-      await activityApi.markAsRead(activity._id);
-      setActivities(prev => prev.map(a => (a._id === activity._id ? { ...a, isRead: true } : a)));
+      await activityApi.markAsRead(activity.id);
+      setActivities(prev => prev.map(a => (a.id === activity.id ? { ...a, isRead: true } : a)));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update activity');
     }
@@ -44,7 +44,7 @@ export function ActivityPage() {
             {activities.map(activity => {
               const targetName = typeof activity.target === 'object' && activity.target ? activity.target.name : undefined;
               return (
-                <li key={activity._id} className={activity.isRead ? 'activity-item read' : 'activity-item'}>
+                <li key={activity.id} className={activity.isRead ? 'activity-item read' : 'activity-item'}>
                   <span>
                     You {describeActivity(activity.action)} {targetName ?? `a ${activity.targetModel.toLowerCase()}`}
                   </span>

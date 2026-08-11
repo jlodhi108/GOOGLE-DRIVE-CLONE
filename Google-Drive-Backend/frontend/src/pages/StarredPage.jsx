@@ -50,8 +50,8 @@ export function StarredPage() {
         onTrash={handleTrash}
         onPreview={handlePreview}
         onDownload={handleDownload}
-        onShare={(item, kind) => setShareTarget({ kind, id: item._id, name: item.name })}
-        onRename={(item, kind) => setRenameTarget({ kind, id: item._id, name: item.name })}
+        onShare={(item, kind) => setShareTarget({ kind, id: item.id, name: item.name })}
+        onRename={(item, kind) => setRenameTarget({ kind, id: item.id, name: item.name })}
       />
 
       {renameTarget && (

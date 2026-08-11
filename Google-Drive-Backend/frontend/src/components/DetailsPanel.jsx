@@ -11,7 +11,7 @@ export function DetailsPanel({ item, kind, owner = 'You', isOpen, onClose }) {
       setActivities([]);
       return;
     }
-    activityApi.resource(item._id)
+    activityApi.resource(item.id)
       .then(data => setActivities(data.activities || []))
       .catch(() => setActivities([]));
   }, [item]);
@@ -48,7 +48,7 @@ export function DetailsPanel({ item, kind, owner = 'You', isOpen, onClose }) {
               ) : (
                 <ul>
                   {activities.map(a => (
-                    <li key={a._id}>You {describeActivity(a.action)} this {kind} &mdash; {formatDate(a.createdAt)}</li>
+                    <li key={a.id}>You {describeActivity(a.action)} this {kind} &mdash; {formatDate(a.createdAt)}</li>
                   ))}
                 </ul>
               )}

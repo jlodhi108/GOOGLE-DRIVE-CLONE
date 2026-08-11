@@ -91,7 +91,7 @@ const activityService = {
           createdAt: { [Op.between]: [new Date(startDate), new Date(endDate)] }
         },
         attributes: [
-          ['action', '_id'],
+          ['action', 'id'],
           [fn('COUNT', col('action')), 'count']
         ],
         group: ['action'],

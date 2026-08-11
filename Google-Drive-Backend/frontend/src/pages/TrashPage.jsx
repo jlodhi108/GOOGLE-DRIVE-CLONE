@@ -34,8 +34,8 @@ export function TrashPage() {
     if (!confirm('Permanently delete everything in trash? This cannot be undone.')) return;
     try {
       await Promise.all([
-        ...folders.map(f => foldersApi.permanentDelete(f._id)),
-        ...files.map(f => filesApi.permanentDelete(f._id))
+        ...folders.map(f => foldersApi.permanentDelete(f.id)),
+        ...files.map(f => filesApi.permanentDelete(f.id))
       ]);
       await load();
     } catch (err) {

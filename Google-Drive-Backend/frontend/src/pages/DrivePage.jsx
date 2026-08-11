@@ -18,7 +18,7 @@ export function DrivePage() {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
 
-  const currentFolderId = trail.length > 0 ? trail[trail.length - 1]._id : null;
+  const currentFolderId = trail.length > 0 ? trail[trail.length - 1].id : null;
 
   const load = useCallback(async (folderId) => {
     setLoading(true);
@@ -97,8 +97,8 @@ export function DrivePage() {
         emptyMessage="This folder is empty."
         onOpenFolder={openFolder}
         onStar={handleStar}
-        onShare={(item, kind) => setShareTarget({ kind, id: item._id, name: item.name })}
-        onRename={(item, kind) => setRenameTarget({ kind, id: item._id, name: item.name })}
+        onShare={(item, kind) => setShareTarget({ kind, id: item.id, name: item.name })}
+        onRename={(item, kind) => setRenameTarget({ kind, id: item.id, name: item.name })}
         onTrash={handleTrash}
         onPreview={handlePreview}
         onDownload={handleDownload}

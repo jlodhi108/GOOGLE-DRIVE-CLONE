@@ -188,7 +188,7 @@ export function ItemExplorer({
       >
         {mode !== 'shared' && (
           <span className="file-row__check" onClick={e => e.stopPropagation()}>
-            <input type="checkbox" aria-label={`Select ${item.name}`} checked={isSelected} onChange={() => toggleSelected(item._id)} />
+            <input type="checkbox" aria-label={`Select ${item.name}`} checked={isSelected} onChange={() => toggleSelected(item.id)} />
           </span>
         )}
         <span className="file-row__name">
