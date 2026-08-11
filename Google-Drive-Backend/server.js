@@ -26,7 +26,10 @@ sequelize.sync()
   .catch(err => console.error('SQLite connection error:', err));
 
 // Middleware
-app.use(helmet()); // Set security HTTP headers
+app.use(helmet({
+  hsts: false,
+  contentSecurityPolicy: false
+})); // Set security HTTP headers (HSTS disabled for HTTP-only deployment)
 app.use(cors()); // Enable CORS
 app.use(compression()); // Compress all routes
 app.use(express.json({ limit: '10kb' })); // Body parser, reading data from body into req.body
