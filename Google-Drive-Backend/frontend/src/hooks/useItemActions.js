@@ -16,7 +16,7 @@ export function useItemActions(reload, onError) {
 
   const handleStar = async (item, kind) => {
     try {
-      await api(kind).star(item._id);
+      await api(kind).star(item.id);
       await reload();
     } catch (err) { report(err, 'Failed to update star'); }
   };
@@ -24,14 +24,14 @@ export function useItemActions(reload, onError) {
   const handleTrash = async (item, kind) => {
     if (!confirm(`Move "${item.name}" to trash?`)) return;
     try {
-      await api(kind).remove(item._id);
+      await api(kind).remove(item.id);
       await reload();
     } catch (err) { report(err, 'Failed to move to trash'); }
   };
 
   const handleRestore = async (item, kind) => {
     try {
-      await api(kind).restore(item._id);
+      await api(kind).restore(item.id);
       await reload();
     } catch (err) { report(err, 'Failed to restore'); }
   };
@@ -39,21 +39,21 @@ export function useItemActions(reload, onError) {
   const handlePermanentDelete = async (item, kind) => {
     if (!confirm(`Permanently delete "${item.name}"? This cannot be undone.`)) return;
     try {
-      await api(kind).permanentDelete(item._id);
+      await api(kind).permanentDelete(item.id);
       await reload();
     } catch (err) { report(err, 'Failed to permanently delete'); }
   };
 
   const handlePreview = async (file) => {
     try {
-      const { downloadUrl } = await filesApi.getDownloadUrl(file._id, 'view');
+      const { downloadUrl } = await filesApi.getDownloadUrl(file.id, 'view');
       window.open(downloadUrl, '_blank');
     } catch (err) { report(err, 'Failed to open preview'); }
   };
 
   const handleDownload = async (file) => {
     try {
-      const { downloadUrl } = await filesApi.getDownloadUrl(file._id, 'download');
+      const { downloadUrl } = await filesApi.getDownloadUrl(file.id, 'download');
       window.open(downloadUrl, '_blank');
     } catch (err) { report(err, 'Failed to generate download link'); }
   };
