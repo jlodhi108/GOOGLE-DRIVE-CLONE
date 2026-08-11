@@ -48,7 +48,8 @@ const authController = {
     try {
       const { email, otp } = req.body;
 
-      const user = await User.findOne({ where: { email } }); // Note: select('+otp +otpExpires') is handled via default scopes if needed, or explicitly queried if scopes were set up.
+      // Use unscoped to include otp and otpExpires fields (excluded by defaultScope)
+      const user = await User.unscoped().findOne({ where: { email } });
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
@@ -86,7 +87,8 @@ const authController = {
     try {
       const { email } = req.body;
 
-      const user = await User.findOne({ where: { email } });
+      // Use unscoped to include otp fields
+      const user = await User.unscoped().findOne({ where: { email } });
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
@@ -109,7 +111,8 @@ const authController = {
     try {
       const { email } = req.body;
 
-      const user = await User.findOne({ where: { email } });
+      // Use unscoped to include otp fields
+      const user = await User.unscoped().findOne({ where: { email } });
       if (user) {
         const otp = user.generateOtp();
         await user.save();
@@ -127,7 +130,8 @@ const authController = {
     try {
       const { email, otp, newPassword } = req.body;
 
-      const user = await User.findOne({ where: { email } });
+      // Use unscoped to include otp and password fields
+      const user = await User.unscoped().findOne({ where: { email } });
       if (!user || !user.matchOtp(otp)) {
         return res.status(400).json({ message: 'Invalid or expired reset code' });
       }
@@ -150,7 +154,8 @@ const authController = {
     try {
       const { email, password } = req.body;
 
-      const user = await User.findOne({ where: { email } });
+      // Use unscoped to include password field (excluded by defaultScope)
+      const user = await User.unscoped().findOne({ where: { email } });
       if (!user || !(await user.matchPassword(password))) {
         return res.status(401).json({ message: 'Invalid email or password' });
       }
