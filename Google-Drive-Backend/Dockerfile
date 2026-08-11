@@ -1,5 +1,5 @@
 # Stage 1: Build the frontend
-FROM node:20-alpine AS frontend-builder
+FROM node:18-alpine AS frontend-builder
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm install
@@ -7,12 +7,10 @@ COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Setup the backend
-FROM node:20-alpine
+FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
-RUN apk add --no-cache python3 make g++ && \
-    npm install --build-from-source sqlite3 && \
-    npm install
+RUN npm install
 COPY . .
 # Copy built frontend
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
