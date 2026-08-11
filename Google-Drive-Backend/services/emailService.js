@@ -1,26 +1,37 @@
 const config = require('../config/config');
 
 async function sendEmail({ to, subject, text, html }) {
-  const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${config.sendgridApiKey}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      personalizations: [{ to: [{ email: to }] }],
-      from: { email: config.fromEmail },
-      subject,
-      content: [
-        { type: 'text/plain', value: text },
-        { type: 'text/html', value: html }
-      ]
-    })
-  });
+  // If SendGrid is not configured, log to console and skip sending
+  if (!config.sendgridApiKey || !config.fromEmail) {
+    console.log(`[EMAIL - NO SENDGRID] To: ${to} | Subject: ${subject}`);
+    console.log(`[EMAIL BODY] ${text}`);
+    return;
+  }
 
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Failed to send email: ${res.status} ${body}`);
+  try {
+    const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${config.sendgridApiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: to }] }],
+        from: { email: config.fromEmail },
+        subject,
+        content: [
+          { type: 'text/plain', value: text },
+          { type: 'text/html', value: html }
+        ]
+      })
+    });
+
+    if (!res.ok) {
+      const body = await res.text();
+      console.error(`Failed to send email: ${res.status} ${body}`);
+    }
+  } catch (err) {
+    console.error('Email sending error (non-fatal):', err.message);
   }
 }
 
