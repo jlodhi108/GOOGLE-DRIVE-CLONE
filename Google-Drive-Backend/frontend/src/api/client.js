@@ -1,4 +1,4 @@
-export const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api/v1';
+export const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api/v1';
 
 const TOKEN_KEY = 'gd_token';
 const REFRESH_TOKEN_KEY = 'gd_refresh_token';
