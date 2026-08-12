@@ -1,32 +1,34 @@
-# React + TypeScript + Vite
+# Google Drive Clone - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This is the React frontend for the Google Drive Clone application. It is built for speed and simplicity using Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
+- React 19
+- React Router v7
+- Vite (Build Tool)
+- Axios (API Requests)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Local Development Setup
 
-## React Compiler
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+   This will start the Vite dev server with Hot Module Replacement (HMR).
 
-## Expanding the Oxlint configuration
+## Production Build
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+To build the frontend for production, run:
+```bash
+npm run build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+This compiles the React application into static files located in the `dist/` directory. 
+
+### Note on Docker Deployment
+When deployed using Docker (from the root folder's `Dockerfile`), the frontend is automatically compiled during Stage 1 of the build process using `node:20-alpine`. The resulting static files are then copied into the backend container and served directly by Express.js. You do not need to manually build or run the frontend in a production Docker environment.
